@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">CashlessCity</string>
-    <string name="title_activity_maps">MapsActivity</string>
+    <string name="app_name">Безналичный город</string>
+    <string name="error_placeapi_is_down">Place API is down</string>
 </resources>
