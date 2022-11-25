@@ -1,10 +1,12 @@
 package ru.hustliters.cashlesscity
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.yandex.mapkit.geometry.Geometry
 import com.yandex.mapkit.layers.GeoObjectTapEvent
 import com.yandex.mapkit.layers.GeoObjectTapListener
+import com.yandex.mapkit.map.GeoObjectSelectionMetadata
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.search.*
 import com.yandex.mapkit.uri.UriObjectMetadata
@@ -14,13 +16,18 @@ import com.yandex.runtime.Error
 class MapController(private val searchManager: SearchManager, private val map: Map)
     : ViewModel(), Session.SearchListener, GeoObjectTapListener {
 
+    val selectedBusinesses = MutableLiveData<List<Business>>(arrayListOf())
+
     override fun onSearchResponse(response: Response) {
+        val list = arrayListOf<Business>()
         for (index in response.collection.children) {
             index.obj?.let { geoObject ->
                 val metadata = geoObject.metadataContainer.getItem(BusinessObjectMetadata::class.java)
+                list.add(Business(metadata.name, metadata.address.formattedAddress, metadata.categories))
                 Log.i("onSearchResponse", "Category - ${metadata.name}, description - ${geoObject.descriptionText}")
             }
         }
+        selectedBusinesses.value = list
     }
 
     override fun onSearchError(error: Error) {
@@ -28,10 +35,15 @@ class MapController(private val searchManager: SearchManager, private val map: M
     }
 
     override fun onObjectTap(event: GeoObjectTapEvent): Boolean {
-        event.isSelected = true
+        val selectionMetadata = event.geoObject
+            .metadataContainer
+            .getItem(GeoObjectSelectionMetadata::class.java)
         val uriMetadata = event.geoObject
             .metadataContainer
             .getItem(UriObjectMetadata::class.java)
+
+        map.selectGeoObject(selectionMetadata.id, selectionMetadata.layerId)
+
         if (uriMetadata != null) {
             searchManager.searchByURI(uriMetadata.uris.first().value, SearchOptions().setSearchTypes(SearchType.BIZ.value), this)
         } else {

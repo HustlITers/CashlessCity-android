@@ -1,10 +1,9 @@
 package ru.hustliters.cashlesscity
 
-import android.app.SearchManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.libraries.places.api.Places
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
@@ -20,11 +19,13 @@ class MapsActivity : AppCompatActivity() {
         MapKitFactory.initialize(this);
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
+        binding.selectedBusinesses.adapter = SelectedBusinessesAdapter(arrayListOf())
+        binding.selectedBusinesses.layoutManager = LinearLayoutManager(this)
         setContentView(binding.root)
 
         val map = binding.mapview.map
         map.move(
-            CameraPosition(Point(59.938703, 30.318006), 14.0f, 0.0f, 0.0f),
+            CameraPosition(Point(62.027221, 129.732178), 14.0f, 0.0f, 0.0f),
             Animation(Animation.Type.SMOOTH, 5F),
             null
         )
@@ -32,6 +33,9 @@ class MapsActivity : AppCompatActivity() {
         val viewModel: MapController by viewModels(factoryProducer = { MapControllerFactory(map) })
 
         map.addTapListener(viewModel);
+        viewModel.selectedBusinesses.observe(this) { selectedBusinesses ->
+            binding.selectedBusinesses.adapter = SelectedBusinessesAdapter(selectedBusinesses)
+        }
     }
 
     override fun onStart() {
