@@ -1,13 +1,19 @@
 package ru.hustliters.cashlesscity
 
 import android.os.Bundle
+import android.view.View
+import android.view.View.OnClickListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import ru.hustliters.cashlesscity.databinding.ActivityMapsBinding
 
 class MapsActivity : AppCompatActivity() {
@@ -19,8 +25,6 @@ class MapsActivity : AppCompatActivity() {
         MapKitFactory.initialize(this);
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
-        binding.selectedBusinesses.adapter = SelectedBusinessesAdapter(arrayListOf())
-        binding.selectedBusinesses.layoutManager = LinearLayoutManager(this)
         setContentView(binding.root)
 
         val map = binding.mapview.map
@@ -32,9 +36,19 @@ class MapsActivity : AppCompatActivity() {
 
         val viewModel: MapController by viewModels(factoryProducer = { MapControllerFactory(map) })
 
+//        var retrofit = Retrofit.Builder()
+//            .baseUrl("http://cashlesscity.ru/")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+
         map.addTapListener(viewModel);
+//        val callbackOnClickBusiness = fun(sadas: Int, asd: View?) {
+//
+//        }
         viewModel.selectedBusinesses.observe(this) { selectedBusinesses ->
-            binding.selectedBusinesses.adapter = SelectedBusinessesAdapter(selectedBusinesses)
+            if (selectedBusinesses.isEmpty()) return@observe
+            val modalBottomSheet = ModalBottomSheet(selectedBusinesses)
+            modalBottomSheet.show(supportFragmentManager, ModalBottomSheet.TAG)
         }
     }
 
