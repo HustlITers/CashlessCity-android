@@ -2,7 +2,7 @@
 
 <hr>
 
-![Vladislav Novikov](https://img.shields.io/github/followers/Tidinari?label=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D1%81%D0%BB%D0%B0%D0%B2%20%D0%9D%D0%BE%D0%B2%D0%B8%D0%BA%D0%BE%D0%B2%20%7C%20Designer%2FDeveloper&style=social) ![Sergey Novikov](https://img.shields.io/github/followers/Isn0v?label=%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9%20%D0%9D%D0%BE%D0%B2%D0%B8%D0%BA%D0%BE%D0%B2%20%7C%20Manager&style=social)
+[![Vladislav Novikov](https://img.shields.io/github/followers/Tidinari?label=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D1%81%D0%BB%D0%B0%D0%B2%20%D0%9D%D0%BE%D0%B2%D0%B8%D0%BA%D0%BE%D0%B2%20%7C%20Designer%2FDeveloper&style=social)](https://github.com/orgs/HustlITers/people/Tidinari)   [![Sergey Novikov](https://img.shields.io/github/followers/Isn0v?label=%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9%20%D0%9D%D0%BE%D0%B2%D0%B8%D0%BA%D0%BE%D0%B2%20%7C%20Manager&style=social)](https://github.com/orgs/HustlITers/people/Isn0v)
 
 <hr>
 
